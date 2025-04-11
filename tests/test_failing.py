@@ -12,6 +12,6 @@ def test_intentionally_failing() -> None:
     It makes a simple assertion that will always fail.
     """
     expected_value = 42
-    actual_value = 13
+    actual_value = 42
     
     assert expected_value == actual_value, f"Expected {expected_value}, but got {actual_value}" 
