@@ -19,19 +19,31 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
+        cache: 'pip'
 
     - name: Install dependencies
       run: |
+        echo "Installing Python dependencies..."
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pytest
+        echo "Dependencies installed successfully!"
 
     - name: Run tests
       run: |
+        echo "Running test suite..."
         pytest -v
+        echo "All tests completed successfully!"
       
     - name: Check test status
       if: ${{ failure() }}
       run: |
-        echo "Tests failed! Please fix the failing tests before merging."
+        echo "❌ Tests failed! Please fix the failing tests before merging."
+        echo "Review the test output above for details on what failed."
         exit 1
+
+    - name: Success message
+      if: ${{ success() }}
+      run: |
+        echo "✅ All tests passed successfully!"
+        echo "This PR is ready to be reviewed and merged."
